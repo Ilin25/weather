@@ -13,16 +13,21 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "weatherForecast")
+//название класса и полей полностью совпалдает с названиями в БД
 public class WeatherForecast {// Прогноз погоды
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "id")
     private long id;
     @OneToOne
     private Coordinate coord; //географическое положение города
-    @OneToMany
-    private List<Weather> weather; //погода
+    @OneToMany(mappedBy = "weatherForecast", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Weather> weathers; //погода
+    @Column(name = "base")
     private String base; //станция
     @OneToOne
     private MainParametersForecast main;//главные параметры
+    @Column(name = "visibility")
     private String visibility;//видимость
     @OneToOne
     private Wind wind;//ветер
@@ -32,13 +37,18 @@ public class WeatherForecast {// Прогноз погоды
     private Rain rain;//дождь
     @OneToOne
     private Snow snow;//снег
-    private long dt;//время расчета данных ,unix,UTC
+    @Column(name = "timeCalculationData")
+    private long timeCalculationData;//время расчета данных ,unix,UTC
     @OneToOne
     private SystemParam sys;//системные параметры
-    private int timezone;//Сдвиг в секундах от UTC
-    private long City_id;// id города
-    private String name;// название города
-    private int code;//Внутренний параметр
+    @Column(name = "timezone")
+    private long timezone;//Сдвиг в секундах от UTC
+    @Column(name = "cityId")
+    private int cityId;// id города
+    @Column(name = "nameCity")
+    private String nameCity;// название города
+    @Column(name = "codeCity")
+    private int codeCity;//Внутренний параметр(код города)
 
 
 

@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 
 @Entity
@@ -15,13 +13,22 @@ import javax.persistence.ManyToOne;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "weather")
+//название класса и полей полностью совпалдает с названиями в БД
 public class Weather {//погода
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-    private int id_weatherConditions;//идентификатор погодных условий
-    private String main;//Группа погодных параметров
+    @Column(name = "weatherConditions_id")
+    private int weatherConditions_id;//идентификатор погодных условий
+    @Column(name = "groupWeatherParameter")
+    private String groupWeatherParameter;//Группа погодных параметров
+    @Column(name = "description")
     private String description;//Погодные условия в группе
-    private String icon;//Идентификатор значка погоды
+    @Column(name = "icon_id")
+    private String icon_id;//Идентификатор значка погоды
     @ManyToOne
+    @JoinColumn(name = "weatherForecast_id")
     private WeatherForecast weatherForecast;
 }
