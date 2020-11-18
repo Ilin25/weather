@@ -1,4 +1,4 @@
-package ru.ilin.weather.model;
+package ru.ilin.weather.model.response;
 
 
 public class SnowResponse {//снег
