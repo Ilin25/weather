@@ -25,7 +25,5 @@ public class Wind {
     private double deg;//направление ветра в градусах
     @Column(name = "gust")
     private double gust;//порывы ветра
-    @OneToOne
-    private WeatherForecast weatherForecast;
 
 }

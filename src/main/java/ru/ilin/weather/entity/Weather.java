@@ -20,15 +20,15 @@ public class Weather {//погода
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(name = "weatherConditions_id")
+    @Column(name = "weather_conditions_id")
     private int weatherConditions_id;//идентификатор погодных условий
-    @Column(name = "groupWeatherParameter")
+    @Column(name = "group_weather_parameter")
     private String groupWeatherParameter;//Группа погодных параметров
     @Column(name = "description")
     private String description;//Погодные условия в группе
     @Column(name = "icon_id")
     private String icon_id;//Идентификатор значка погоды
     @ManyToOne
-    @JoinColumn(name = "weatherForecast_id")
+    @JoinColumn(name = "weather_forecast_id")
     private WeatherForecast weatherForecast;
 }

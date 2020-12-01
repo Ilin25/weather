@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "mainParametersForecast")
+@Table(name = "main_parameters_forecast")
 //название класса и полей полностью совпалдает с названиями в БД
 public class MainParametersForecast {
     @Id
@@ -24,7 +24,7 @@ public class MainParametersForecast {
     @Column(name = "feels_like")
     private double feels_like;//чувствуется как
     @Column(name = "pressure")
-    private int pressure;//давление
+    private long pressure;//давление
     @Column(name = "humidity")
     private int humidity;//влажность
     @Column(name = "temp_min")
@@ -32,10 +32,8 @@ public class MainParametersForecast {
     @Column(name = "temp_max")
     private double temp_max;//максимальная температура
     @Column(name = "sea_level")
-    private int sea_level;//атм давление на уровне моря
+    private long sea_level;//атм давление на уровне моря
     @Column(name = "grnd_level")
-    private int grnd_level;//атм давление на уровне земли
-    @OneToOne
-    private WeatherForecast weatherForecast;
+    private long grnd_level;//атм давление на уровне земли
 
 }

@@ -20,6 +20,4 @@ public class Clouds {//облачность
     private long id;
     @Column(name = "cloudiness")
     private int cloudiness;// облачность в процентах
-    @OneToOne
-    private WeatherForecast weatherForecast;
 }

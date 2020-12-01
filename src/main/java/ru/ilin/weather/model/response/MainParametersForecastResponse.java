@@ -1,17 +1,18 @@
 package ru.ilin.weather.model.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MainParametersForecastResponse {
 
     private long id;
     private double temp;// температура
     private double feels_like;//чувствуется как
-    private int pressure;//давление
+    private long pressure;//давление
     private int humidity;//влажность
     private double temp_min;//минимальная температура
     private double temp_max;//максимальная температура
-    private int sea_level;//атм давление на уровне моря
-    private int grnd_level;//атм давление на уровне земли
-    private WeatherForecastResponse weatherForecastResponse;
+    private long sea_level;//атм давление на уровне моря
+    private long grnd_level;//атм давление на уровне земли
 
 }

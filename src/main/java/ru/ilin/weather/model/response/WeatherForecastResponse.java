@@ -1,22 +1,48 @@
 package ru.ilin.weather.model.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+import ru.ilin.weather.entity.*;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastResponse {// Прогноз погоды
 
     private long id;
-    private CoordinateResponse coord; //географическое положение города
+
+    private Coordinate coord; //географическое положение города
+
+    private List<Weather> weathers; //погода
+
     private String base; //станция
-    private MainParametersForecastResponse main;//главные параметры
+
+    private MainParametersForecast main;//главные параметры
+
     private String visibility;//видимость
-    private WindResponse windResponse;//ветер
-    private CloudsResponse cloudsResponse;//облачность
-    private RainResponse rainResponse;//дождь
-    private SnowResponse snowResponse;//снег
+
+    private Wind wind;//ветер
+
+    private Clouds clouds;//облачность
+
+    private Rain rain;//дождь
+
+    private Snow snow;//снег
+
     private long timeCalculationData;//время расчета данных ,unix,UTC
-    private SystemParamResponse sys;//системные параметры
+
+    private SystemParam sys;//системные параметры
+
     private long timezone;//Сдвиг в секундах от UTC
+
     private int cityId;// id города
+
     private String nameCity;// название города
+
     private int codeCity;//Внутренний параметр(код города)
 
 }

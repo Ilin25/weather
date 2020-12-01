@@ -23,6 +23,5 @@ public class Snow {//снег
     private int theOneHour;//объём снега за последний один час
     @Column(name = "forThreeHours")
     private int forThreeHours;//объём снега за последние три часа
-    @OneToOne
-    private WeatherForecast weatherForecast;
+
 }

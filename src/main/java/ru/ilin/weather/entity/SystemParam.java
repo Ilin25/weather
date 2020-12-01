@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "systemParam")
+@Table(name = "system_param")
 //название класса и полей полностью совпалдает с названиями в БД
 public class SystemParam {//Системные параметры
     @Id
@@ -21,16 +21,15 @@ public class SystemParam {//Системные параметры
     private long id;
     @Column(name = "type")
     private int type;//Внутренний параметр
-    @Column(name = "id_internalParameter")
+    @Column(name = "id_internal_parameter")
     private long id_internalParameter;//Внутренний параметр
     @Column(name = "message")
     private String message;//Внутренний параметр
     @Column(name = "country")
-    private int country;//Код страны
+    private String country;//Код страны
     @Column(name = "sunrise")
     private long sunrise;//Время восхда,unix,UTC
     @Column(name = "sunset")
     private long sunset;//Время заката ,unix,UTC
-    @OneToOne
-    private WeatherForecast weatherForecast;
+
 }

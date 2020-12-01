@@ -16,7 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 //название класса и полей полностью совпалдает с названиями в БД
 @Table(name = "coordinate")
-public class Coordinate implements Serializable {//Координаты
+public class Coordinate {//Координаты
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,7 +25,5 @@ public class Coordinate implements Serializable {//Координаты
     private double lon;//долгота
     @Column(name = "lat")
     private double lat;//широта
-    @OneToOne
-    @JoinColumn
-    private WeatherForecast weatherForecast;
+
 }

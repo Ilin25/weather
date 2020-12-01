@@ -23,6 +23,4 @@ public class Rain {//дождь
     private int theOneHour;//объём дождя за последний один час
     @Column(name = "forThreeHours")
     private int forThreeHours;//объём дождя за последние три часа
-    @OneToOne
-    private WeatherForecast weatherForecast;
 }
