@@ -2,7 +2,6 @@ package ru.ilin.weather.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import ru.ilin.weather.entity.WeatherForecast;
 import ru.ilin.weather.model.request.ByCityNameRequest;
@@ -25,7 +24,7 @@ public class WeatherForecastImpl implements WeatherForecastService {
     }
 
 
-    public WeatherForecast sendQueryAPI(){
+    private WeatherForecast sendQueryAPI(){
             RestTemplate restTemplate = new RestTemplate();
         ByCityNameRequest byCityNameRequest = new ByCityNameRequest("Москва");
             String fooResourceUrl
@@ -38,9 +37,8 @@ public class WeatherForecastImpl implements WeatherForecastService {
             WeatherForecastResponse weatherForecastResponse = restTemplate
                     .getForObject(fooResourceUrl,WeatherForecastResponse.class);
             WeatherForecast weatherForecast = new WeatherForecast
-                    (weatherForecastResponse.getId(),
-        weatherForecastResponse.getCoord(),
-        weatherForecastResponse.getWeathers(),
+                    (weatherForecastResponse.getCoord(),
+        weatherForecastResponse.getWeather(),
         weatherForecastResponse.getBase(),
         weatherForecastResponse.getMain(),
         weatherForecastResponse.getVisibility(),
@@ -48,12 +46,12 @@ public class WeatherForecastImpl implements WeatherForecastService {
         weatherForecastResponse.getClouds(),
         weatherForecastResponse.getRain(),
         weatherForecastResponse.getSnow(),
-        weatherForecastResponse.getTimeCalculationData(),
+        weatherForecastResponse.getDt(),
         weatherForecastResponse.getSys(),
         weatherForecastResponse.getTimezone(),
-        weatherForecastResponse.getCityId(),
-        weatherForecastResponse.getNameCity(),
-        weatherForecastResponse.getCodeCity());
+        weatherForecastResponse.getId(),
+        weatherForecastResponse.getName(),
+        weatherForecastResponse.getCod());
         return weatherForecast;
     }
 }

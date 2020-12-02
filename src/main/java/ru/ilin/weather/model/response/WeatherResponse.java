@@ -2,13 +2,14 @@ package ru.ilin.weather.model.response;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ru.ilin.weather.entity.WeatherForecast;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherResponse {//погода
-    private long id;
-    private int weatherConditions_id;//идентификатор погодных условий
-    private String groupWeatherParameter;//Группа погодных параметров
+
+    private int id;//идентификатор погодных условий
+    private String main;//Группа погодных параметров
     private String description;//Погодные условия в группе
-    private String icon_id;//Идентификатор значка погоды
+    private String icon;//Идентификатор значка погоды
 
 }

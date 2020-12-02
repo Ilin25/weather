@@ -13,11 +13,10 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherForecastResponse {// Прогноз погоды
 
-    private long id;
 
     private Coordinate coord; //географическое положение города
 
-    private List<Weather> weathers; //погода
+    private List<Weather> weather; //погода
 
     private String base; //станция
 
@@ -33,16 +32,16 @@ public class WeatherForecastResponse {// Прогноз погоды
 
     private Snow snow;//снег
 
-    private long timeCalculationData;//время расчета данных ,unix,UTC
+    private long dt;//время расчета данных ,unix,UTC
 
     private SystemParam sys;//системные параметры
 
     private long timezone;//Сдвиг в секундах от UTC
 
-    private int cityId;// id города
+    private int id;// id города
 
-    private String nameCity;// название города
+    private String name;// название города
 
-    private int codeCity;//Внутренний параметр(код города)
+    private int cod;//Внутренний параметр(код города)
 
 }

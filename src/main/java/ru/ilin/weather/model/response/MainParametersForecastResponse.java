@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MainParametersForecastResponse {
 
-    private long id;
     private double temp;// температура
     private double feels_like;//чувствуется как
     private long pressure;//давление
