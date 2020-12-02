@@ -32,4 +32,12 @@ public class SystemParam {//Системные параметры
     @Column(name = "sunset")
     private long sunset;//Время заката ,unix,UTC
 
+    public SystemParam(int type, long id_internalParameter, String message, String country, long sunrise, long sunset) {
+        this.type = type;
+        this.id_internalParameter = id_internalParameter;
+        this.message = message;
+        this.country = country;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
+    }
 }
