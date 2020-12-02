@@ -17,7 +17,7 @@ public class Clouds {//облачность
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
     @Column(name = "cloudiness")
     private int cloudiness;// облачность в процентах
 }

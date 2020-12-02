@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-
 public class ByCityNameRequest {//запрос погоды по названию города
 
     private String cityName;//название города

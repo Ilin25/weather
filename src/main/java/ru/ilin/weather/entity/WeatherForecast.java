@@ -14,9 +14,9 @@ public class WeatherForecast {// Прогноз погоды
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private long id;
+    private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coordinate_id")
     private Coordinate coord; //географическое положение города
 
@@ -26,33 +26,33 @@ public class WeatherForecast {// Прогноз погоды
     @Column(name = "base")
     private String base; //станция
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "main_parameters_forecast_id")
     private MainParametersForecast main;//главные параметры
 
     @Column(name = "visibility")
     private String visibility;//видимость
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "wind_id")
     private Wind wind;//ветер
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "clouds_id")
     private Clouds clouds;//облачность
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rain_id")
     private Rain rain;//дождь
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "snow_id")
     private Snow snow;//снег
 
     @Column(name = "time_calculation_data")
     private long timeCalculationData;//время расчета данных ,unix,UTC
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "system_param_id")
     private SystemParam sys;//системные параметры
 
@@ -68,7 +68,22 @@ public class WeatherForecast {// Прогноз погоды
     @Column(name = "code_city")
     private int codeCity;//Внутренний параметр(код города)
 
-    public WeatherForecast(Coordinate coord, List<Weather> weathers, String base, MainParametersForecast main, String visibility, Wind wind, Clouds clouds, Rain rain, Snow snow, long timeCalculationData, SystemParam sys, long timezone, int cityId, String nameCity, int codeCity) {
+    public WeatherForecast(
+            Coordinate coord,
+            List<Weather> weathers,
+            String base,
+            MainParametersForecast main,
+            String visibility,
+            Wind wind,
+            Clouds clouds,
+            Rain rain,
+            Snow snow,
+            long timeCalculationData,
+            SystemParam sys,
+            long timezone,
+            int cityId,
+            String nameCity,
+            int codeCity) {
         this.coord = coord;
         this.weathers = weathers;
         this.base = base;

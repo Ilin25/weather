@@ -23,6 +23,7 @@ public class WeatherForecastImpl implements WeatherForecastService {
     @Autowired
     public WeatherForecastImpl(WeatherForecastRepository weatherForecastRepository) {
         this.weatherForecastRepository = weatherForecastRepository;
+
     }
 
     @Override
@@ -31,7 +32,8 @@ public class WeatherForecastImpl implements WeatherForecastService {
     }
 
 
-    private WeatherForecast sendQueryAPI() {
+    @Override
+    public WeatherForecast sendQueryAPI() {
         RestTemplate restTemplate = new RestTemplate();
         ByCityNameRequest byCityNameRequest = new ByCityNameRequest("Москва");
         String fooResourceUrl
@@ -41,26 +43,27 @@ public class WeatherForecastImpl implements WeatherForecastService {
                 "lang=" + byCityNameRequest.getLang() + "&" +
                 "units=" + byCityNameRequest.getUnits();
 
-        WeatherForecastResponse weatherForecastResponse = restTemplate
-                .getForObject(fooResourceUrl, WeatherForecastResponse.class);
-        WeatherForecast weatherForecast = new WeatherForecast
-                (weatherForecastResponse.getCoord(),
-                        weatherResponseToWeather(
-                                weatherForecastResponse.getWeather().get(0)),
-                        weatherForecastResponse.getBase(),
-                        weatherForecastResponse.getMain(),
-                        weatherForecastResponse.getVisibility(),
-                        weatherForecastResponse.getWind(),
-                        weatherForecastResponse.getClouds(),
-                        weatherForecastResponse.getRain(),
-                        weatherForecastResponse.getSnow(),
-                        weatherForecastResponse.getDt(),
-                        systemParamResponseToSystem(weatherForecastResponse.getSys()),
-                        weatherForecastResponse.getTimezone(),
-                        weatherForecastResponse.getId(),
-                        weatherForecastResponse.getName(),
-                        weatherForecastResponse.getCod());
-        return weatherForecast;
+        WeatherForecastResponse response = restTemplate.getForObject(fooResourceUrl, WeatherForecastResponse.class);
+
+        WeatherForecast currentWeather = new WeatherForecast();
+        currentWeather.setCoord(response.getCoord());
+        currentWeather.setWeathers(weatherResponseToWeather(response.getWeather().get(0)));
+        currentWeather.setBase(response.getBase());
+        currentWeather.setMain(response.getMain());
+        currentWeather.setVisibility(response.getVisibility());
+        currentWeather.setWind(response.getWind());
+        currentWeather.setClouds(response.getClouds());
+        currentWeather.setRain(response.getRain());
+        currentWeather.setSnow(response.getSnow());
+        currentWeather.setTimeCalculationData(response.getDt());
+        currentWeather.setSys(systemParamResponseToSystem(response.getSys()));
+        currentWeather.setTimezone(response.getTimezone());
+        currentWeather.setCityId(response.getId());
+        currentWeather.setNameCity(response.getName());
+        currentWeather.setCodeCity(response.getCod());
+
+        weatherForecastRepository.save(currentWeather);
+        return currentWeather;
     }
 
     private SystemParam systemParamResponseToSystem(SystemParamResponse systemParamResponse) {
@@ -74,7 +77,8 @@ public class WeatherForecastImpl implements WeatherForecastService {
     }
 
     private List<Weather> weatherResponseToWeather(WeatherResponse weatherResponse) {
-        Weather weather = new Weather(weatherResponse.getId(),
+        Weather weather = new Weather(
+                weatherResponse.getId(),
                 weatherResponse.getMain(),
                 weatherResponse.getDescription(),
                 weatherResponse.getIcon(),
