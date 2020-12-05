@@ -19,6 +19,6 @@ public class WeatherForecastController {
 
     @GetMapping("test")
     public WeatherForecast addWeatherForecast(){
-        return weatherForecastService.sendQueryAPI();
+        return weatherForecastService.addWeatherForecast();
     }
 }

@@ -32,11 +32,4 @@ public class Weather {//погода
     @JoinColumn(name = "weather_forecast_id")
     private WeatherForecast weatherForecast;
 
-    public Weather(int weatherConditions_id, String groupWeatherParameter, String description, String icon_id, WeatherForecast weatherForecast) {
-        this.weatherConditions_id = weatherConditions_id;
-        this.groupWeatherParameter = groupWeatherParameter;
-        this.description = description;
-        this.icon_id = icon_id;
-        this.weatherForecast = weatherForecast;
-    }
 }

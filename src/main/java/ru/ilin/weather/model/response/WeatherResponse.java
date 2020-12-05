@@ -19,6 +19,6 @@ import ru.ilin.weather.entity.WeatherForecast;
         private String main;//Группа погодных параметров
         private String description;//Погодные условия в группе
         private String icon;//Идентификатор значка погоды
-        private WeatherForecast weatherForecast;
+        private WeatherForecastResponse weatherForecastResponse;
 
     }

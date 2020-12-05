@@ -68,36 +68,4 @@ public class WeatherForecast {// Прогноз погоды
     @Column(name = "code_city")
     private int codeCity;//Внутренний параметр(код города)
 
-    public WeatherForecast(
-            Coordinate coord,
-            List<Weather> weathers,
-            String base,
-            MainParametersForecast main,
-            String visibility,
-            Wind wind,
-            Clouds clouds,
-            Rain rain,
-            Snow snow,
-            long timeCalculationData,
-            SystemParam sys,
-            long timezone,
-            int cityId,
-            String nameCity,
-            int codeCity) {
-        this.coord = coord;
-        this.weathers = weathers;
-        this.base = base;
-        this.main = main;
-        this.visibility = visibility;
-        this.wind = wind;
-        this.clouds = clouds;
-        this.rain = rain;
-        this.snow = snow;
-        this.timeCalculationData = timeCalculationData;
-        this.sys = sys;
-        this.timezone = timezone;
-        this.cityId = cityId;
-        this.nameCity = nameCity;
-        this.codeCity = codeCity;
-    }
 }

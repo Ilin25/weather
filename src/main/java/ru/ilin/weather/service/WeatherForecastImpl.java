@@ -1,11 +1,10 @@
 package ru.ilin.weather.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.ilin.weather.entity.SystemParam;
-import ru.ilin.weather.entity.Weather;
-import ru.ilin.weather.entity.WeatherForecast;
+import ru.ilin.weather.entity.*;
 import ru.ilin.weather.model.request.ByCityNameRequest;
 import ru.ilin.weather.model.response.SystemParamResponse;
 import ru.ilin.weather.model.response.WeatherForecastResponse;
@@ -19,6 +18,9 @@ import java.util.List;
 public class WeatherForecastImpl implements WeatherForecastService {
 
     private WeatherForecastRepository weatherForecastRepository;
+    private WeatherForecast weatherForecast;
+
+
 
     @Autowired
     public WeatherForecastImpl(WeatherForecastRepository weatherForecastRepository) {
@@ -27,10 +29,10 @@ public class WeatherForecastImpl implements WeatherForecastService {
     }
 
     @Override
-    public void addWeatherForecast() {
+    public WeatherForecast addWeatherForecast() {
         weatherForecastRepository.save(sendQueryAPI());
+        return weatherForecast;
     }
-
 
     @Override
     public WeatherForecast sendQueryAPI() {
@@ -45,45 +47,34 @@ public class WeatherForecastImpl implements WeatherForecastService {
 
         WeatherForecastResponse response = restTemplate.getForObject(fooResourceUrl, WeatherForecastResponse.class);
 
-        WeatherForecast currentWeather = new WeatherForecast();
-        currentWeather.setCoord(response.getCoord());
-        currentWeather.setWeathers(weatherResponseToWeather(response.getWeather().get(0)));
-        currentWeather.setBase(response.getBase());
-        currentWeather.setMain(response.getMain());
-        currentWeather.setVisibility(response.getVisibility());
-        currentWeather.setWind(response.getWind());
-        currentWeather.setClouds(response.getClouds());
-        currentWeather.setRain(response.getRain());
-        currentWeather.setSnow(response.getSnow());
-        currentWeather.setTimeCalculationData(response.getDt());
-        currentWeather.setSys(systemParamResponseToSystem(response.getSys()));
-        currentWeather.setTimezone(response.getTimezone());
-        currentWeather.setCityId(response.getId());
-        currentWeather.setNameCity(response.getName());
-        currentWeather.setCodeCity(response.getCod());
-
-        weatherForecastRepository.save(currentWeather);
-        return currentWeather;
+        ModelMapper modelMapper = new ModelMapper();
+        weatherForecast = modelMapper.map(response,WeatherForecast.class);
+        Weather weather = modelMapper.map(response.getWeather().get(0),Weather.class);
+        weatherForecast.setWeathers(Arrays.asList(weather));
+        weather.setWeatherForecast(weatherForecast);
+        return weatherForecast;
     }
 
-    private SystemParam systemParamResponseToSystem(SystemParamResponse systemParamResponse) {
 
-        return new SystemParam(systemParamResponse.getType(),
-                systemParamResponse.getId(),
-                systemParamResponse.getMessage(),
-                systemParamResponse.getCountry(),
-                systemParamResponse.getSunrise(),
-                systemParamResponse.getSunset());
-    }
 
-    private List<Weather> weatherResponseToWeather(WeatherResponse weatherResponse) {
-        Weather weather = new Weather(
-                weatherResponse.getId(),
-                weatherResponse.getMain(),
-                weatherResponse.getDescription(),
-                weatherResponse.getIcon(),
-                weatherResponse.getWeatherForecast());
-
-        return Arrays.asList(weather);
-    }
+//    private SystemParam systemParamResponseToSystem(SystemParamResponse systemParamResponse) {
+//
+//        return new SystemParam(systemParamResponse.getType(),
+//                systemParamResponse.getId(),
+//                systemParamResponse.getMessage(),
+//                systemParamResponse.getCountry(),
+//                systemParamResponse.getSunrise(),
+//                systemParamResponse.getSunset());
+//    }
+//
+//    private List<Weather> weatherResponseToWeather(WeatherResponse weatherResponse) {
+//        Weather weather = new Weather(
+//                weatherResponse.getId(),
+//                weatherResponse.getMain(),
+//                weatherResponse.getDescription(),
+//                weatherResponse.getIcon(),
+//                weatherResponse.getWeatherForecast());
+//
+//        return Arrays.asList(weather);
+//    }
 }
