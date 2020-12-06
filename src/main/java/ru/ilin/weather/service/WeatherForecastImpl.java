@@ -45,7 +45,8 @@ public class WeatherForecastImpl implements WeatherForecastService {
                 "lang=" + byCityNameRequest.getLang() + "&" +
                 "units=" + byCityNameRequest.getUnits();
 
-        WeatherForecastResponse response = restTemplate.getForObject(fooResourceUrl, WeatherForecastResponse.class);
+        WeatherForecastResponse response
+                = restTemplate.getForObject(fooResourceUrl, WeatherForecastResponse.class);
 
         ModelMapper modelMapper = new ModelMapper();
         weatherForecast = modelMapper.map(response,WeatherForecast.class);
@@ -55,26 +56,4 @@ public class WeatherForecastImpl implements WeatherForecastService {
         return weatherForecast;
     }
 
-
-
-//    private SystemParam systemParamResponseToSystem(SystemParamResponse systemParamResponse) {
-//
-//        return new SystemParam(systemParamResponse.getType(),
-//                systemParamResponse.getId(),
-//                systemParamResponse.getMessage(),
-//                systemParamResponse.getCountry(),
-//                systemParamResponse.getSunrise(),
-//                systemParamResponse.getSunset());
-//    }
-//
-//    private List<Weather> weatherResponseToWeather(WeatherResponse weatherResponse) {
-//        Weather weather = new Weather(
-//                weatherResponse.getId(),
-//                weatherResponse.getMain(),
-//                weatherResponse.getDescription(),
-//                weatherResponse.getIcon(),
-//                weatherResponse.getWeatherForecast());
-//
-//        return Arrays.asList(weather);
-//    }
 }
