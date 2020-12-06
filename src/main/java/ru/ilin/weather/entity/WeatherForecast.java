@@ -1,5 +1,6 @@
 package ru.ilin.weather.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "weather_forecast")
-//название класса и полей полностью совпалдает с названиями в БД
+ //название класса и полей полностью совпалдает с названиями в БД
 public class WeatherForecast {// Прогноз погоды
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -19,7 +20,7 @@ public class WeatherForecast {// Прогноз погоды
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coordinate_id")
     private Coordinate coord; //географическое положение города
-
+    @JsonBackReference
     @OneToMany(mappedBy = "weatherForecast", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Weather> weathers; //погода
 

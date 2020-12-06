@@ -1,5 +1,6 @@
 package ru.ilin.weather.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Weather {//погода
     private String icon_id;//Идентификатор значка погоды
     @ManyToOne
     @JoinColumn(name = "weather_forecast_id")
+    @JsonManagedReference
     private WeatherForecast weatherForecast;
 
 }
