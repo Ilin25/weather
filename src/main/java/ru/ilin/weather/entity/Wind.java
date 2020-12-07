@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "wind")
-//название класса и полей полностью совпалдает с названиями в БД
+
 public class Wind {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

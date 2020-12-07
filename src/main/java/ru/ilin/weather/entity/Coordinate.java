@@ -14,15 +14,18 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//название класса и полей полностью совпалдает с названиями в БД
+
 @Table(name = "coordinate")
 public class Coordinate {//Координаты
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
     @Column(name = "lon")
     private double lon;//долгота
+
     @Column(name = "lat")
     private double lat;//широта
 

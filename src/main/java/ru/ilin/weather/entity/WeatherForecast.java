@@ -1,6 +1,6 @@
 package ru.ilin.weather.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,8 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "weather_forecast")
- //название класса и полей полностью совпалдает с названиями в БД
+
 public class WeatherForecast {// Прогноз погоды
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,9 +21,10 @@ public class WeatherForecast {// Прогноз погоды
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coordinate_id")
     private Coordinate coord; //географическое положение города
+
     @JsonBackReference
     @OneToMany(mappedBy = "weatherForecast", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Weather> weathers; //погода
+    private List<Weather> weather; //погода
 
     @Column(name = "base")
     private String base; //станция
@@ -51,7 +53,7 @@ public class WeatherForecast {// Прогноз погоды
     private Snow snow;//снег
 
     @Column(name = "time_calculation_data")
-    private long timeCalculationData;//время расчета данных ,unix,UTC
+    private long dt;//время расчета данных ,unix,UTC
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "system_param_id")
@@ -64,9 +66,9 @@ public class WeatherForecast {// Прогноз погоды
     private int cityId;// id города
 
     @Column(name = "name_city")
-    private String nameCity;// название города
+    private String name;// название города
 
     @Column(name = "code_city")
-    private int codeCity;//Внутренний параметр(код города)
+    private int cod;//Внутренний параметр(код города)
 
 }

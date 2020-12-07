@@ -13,15 +13,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "snow")
-//название класса и полей полностью совпалдает с названиями в БД
+
 public class Snow {//снег
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(name = "theOneHour")
+
+    @Column(name = "the_one_hour")
     private int theOneHour;//объём снега за последний один час
-    @Column(name = "forThreeHours")
+
+    @Column(name = "for_three_hours")
     private int forThreeHours;//объём снега за последние три часа
 
 }

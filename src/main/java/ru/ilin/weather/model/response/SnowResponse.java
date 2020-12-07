@@ -1,6 +1,7 @@
 package ru.ilin.weather.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,9 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SnowResponse {//снег
 
-    private int theOneHour;//TODO//объём снега за последний один час
-    private int forThreeHours;//TODO//объём снега за последние три часа
+    @JsonSetter("1h")
+    private int theOneHour;
+    @JsonSetter("3h")
+    private int forThreeHours;
 }
 
