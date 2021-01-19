@@ -9,7 +9,7 @@ import ru.ilin.weather.entity.WeatherForecast;
 import ru.ilin.weather.service.WeatherForecastService;
 @EnableScheduling
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class WeatherForecastController {
 
     private WeatherForecastService weatherForecastService;
@@ -19,10 +19,14 @@ public class WeatherForecastController {
         this.weatherForecastService = weatherForecastService;
     }
 
-
-    @Scheduled(fixedDelay = 30000)
-    @GetMapping("test")
-    public WeatherForecast addWeatherForecast(){
+    @Scheduled(fixedDelay = 180000)
+    private WeatherForecast addWeatherForecast(){
         return weatherForecastService.addWeatherForecast();
+    }
+
+    @GetMapping("/getWeatherForecast")
+    public WeatherForecast getWeatherForecast(@RequestParam("date") long date){
+        WeatherForecast weatherForecast = weatherForecastService.getWeatherForecast(date);
+        return weatherForecast;
     }
 }

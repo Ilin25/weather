@@ -8,16 +8,15 @@ import ru.ilin.weather.entity.*;
 import ru.ilin.weather.model.request.ByCityNameRequest;
 import ru.ilin.weather.model.response.WeatherForecastResponse;
 import ru.ilin.weather.repository.WeatherForecastRepository;
-
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 public class WeatherForecastImpl implements WeatherForecastService {
 
     private WeatherForecastRepository weatherForecastRepository;
-    private WeatherForecast weatherForecast;
-
 
 
     @Autowired
@@ -28,12 +27,24 @@ public class WeatherForecastImpl implements WeatherForecastService {
 
     @Override
     public WeatherForecast addWeatherForecast() {
-        weatherForecastRepository.save(sendQueryAPI());
+        WeatherForecast weatherForecast = sendQueryAPI();
+        long timeCalculationData = weatherForecast.getDt();
+        if (!filteringIdenticalDates(timeCalculationData) && timeCalculationData!=0) {
+            weatherForecastRepository.save(weatherForecast);
+        }
+
         return weatherForecast;
     }
 
 
-    private WeatherForecast sendQueryAPI() {
+    @Override
+    public WeatherForecast getWeatherForecast(long date) {
+        long dateResponse = searchDateWeatherForecast(date);
+        return weatherForecastRepository.getWeatherForecast(dateResponse);
+    }
+
+
+    private WeatherForecast sendQueryAPI() { // отправляет запрос к Api Weather Forecast на получение пргноза в городе Москва
         RestTemplate restTemplate = new RestTemplate();
         ByCityNameRequest byCityNameRequest = new ByCityNameRequest("Москва");
         String fooResourceUrl
@@ -47,11 +58,44 @@ public class WeatherForecastImpl implements WeatherForecastService {
                 = restTemplate.getForObject(fooResourceUrl, WeatherForecastResponse.class);
 
         ModelMapper modelMapper = new ModelMapper();
-        weatherForecast = modelMapper.map(response,WeatherForecast.class);
-        Weather weather = modelMapper.map(response.getWeather().get(0),Weather.class);
+        WeatherForecast weatherForecast = modelMapper.map(response, WeatherForecast.class);
+        Weather weather = modelMapper.map(response.getWeather().get(0), Weather.class);
         weatherForecast.setWeather(Arrays.asList(weather));
         weather.setWeatherForecast(weatherForecast);
-        return weatherForecast;
+        return weatherForecast;//возвращает прогноз погоды сформированный из ответа от Api
+    }
+
+    private boolean filteringIdenticalDates(Long data) {//проверка передаваемого прогноза на наличие в базе
+        boolean flag = weatherForecastRepository.filteringIdenticalDates(data);
+        return flag;// есть/нет - true/false
+    }
+
+    private long searchDateWeatherForecast(Long date) {// поиск ближайшей даты измерений к дате из запроса клиента
+        List<Long> dateWeatherForecast
+                = weatherForecastRepository.getListDate().stream().// вернуть список всех дат измерений из базы
+                distinct().//оставить уникальные
+                collect(Collectors.toList());
+        Long max = dateWeatherForecast.stream().max(Long::compareTo).get();//вернуть минимальное значение даты
+        Long min = dateWeatherForecast.stream().min(Long::compareTo).get();// вернуть макс значение даты
+        if (date <= min) {
+            return min;
+        }
+        if (date >= max) {
+            return max;
+        }
+        dateWeatherForecast.add(date);//добавить дату из запроса в лист
+        dateWeatherForecast.sort(Long::compareTo);//отсортировать
+        int index = dateWeatherForecast.indexOf(date);// узнать индекс переданного значения даты из запроса
+        long dateMin = dateWeatherForecast.get(index-1);// получить соседнее число меньше переданного значения
+        long dateMax = dateWeatherForecast.get(index+1);//получить соседнеее число больше переданного значения
+        if (date-dateMin >= dateMax-date) {// вычислить какое из чисел ближе к переданному
+            return dateMax;
+        }
+        if(dateMax-date > date-dateMin){// вычислить какое из чисел ближе к переданному
+            return dateMin;
+        }
+
+        return 0;
     }
 
 }
